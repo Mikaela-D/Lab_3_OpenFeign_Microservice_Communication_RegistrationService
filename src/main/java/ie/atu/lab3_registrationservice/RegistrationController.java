@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RegistrationController {
-    private final NotificationServiceClient notificationServiceClient;
+    private final NotificationService notificationService;
     @Autowired
-    public RegisterController(NotificationServiceClient notificationServiceClient) {
-        this.notificationServiceClient = notificationServiceClient;
+    public RegisterController(NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
     @PostMapping("/confirm")
@@ -19,7 +19,7 @@ public class RegistrationController {
     }
     @PostMapping("/notification-received")
     public String notificationReceived(@RequestBody UserDetails userDetails){
-        String notificationConfirm = notificationServiceClient.notificationConfirmation(userDetails);
+        String notificationConfirm = notificationService.notificationConfirmation(userDetails);
         String message = notificationConfirm + "\nThank you" + userDetails.getName() + "Here is the notification on this email: "+ userDetails.getEmail();
         return message;
     }
